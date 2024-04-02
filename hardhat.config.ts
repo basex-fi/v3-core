@@ -1,18 +1,18 @@
-require("@nomiclabs/hardhat-waffle");
-require("@nomiclabs/hardhat-etherscan");
-require("hardhat-deploy");
-const dotenv = require("dotenv");
-dotenv.config();
+require('@nomiclabs/hardhat-waffle')
+require('@nomiclabs/hardhat-etherscan')
+require('hardhat-deploy')
+const dotenv = require('dotenv')
+dotenv.config()
 
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
-task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
-  const accounts = await hre.ethers.getSigners();
+task('accounts', 'Prints the list of accounts', async (taskArgs, hre) => {
+  const accounts = await hre.ethers.getSigners()
 
   for (const account of accounts) {
-    console.log(account.address);
+    console.log(account.address)
   }
-});
+})
 
 // You need to export an object to set up your config
 // Go to https://hardhat.org/config/ to learn more
@@ -24,7 +24,7 @@ module.exports = {
   solidity: {
     compilers: [
       {
-        version: "0.7.6",
+        version: '0.7.6',
         settings: {
           optimizer: {
             enabled: true,
@@ -34,57 +34,58 @@ module.exports = {
             // do not include the metadata hash, since this is machine dependent
             // and we want all generated code to be deterministic
             // https://docs.soliditylang.org/en/v0.7.6/metadata.html
-            bytecodeHash: "none",
+            bytecodeHash: 'none',
           },
         },
       },
     ],
   },
-  defaultNetwork: "testnet",
+  defaultNetwork: 'testnet',
   networks: {
     localhost: {
-      url: "http://127.0.0.1:8545/",
-      timeout: 200000000,
-      gasPrice: 5100000000,
-      gas: 5100000,
+      url: 'http://127.0.0.1:8545/',
+      // timeout: 200000000,
+      // gasPrice: 5100000000,
+      // gas: 5100000,
+      // accounts: [process.env.TESTER_PRIVATEKEY],
     },
     mainnet: {
-      url: "https://mainnet.base.org",
+      url: 'https://mainnet.base.org',
       timeout: 200000000,
       gasPrice: 1100000000,
       gas: 5100000,
       accounts: [process.env.PRIVATE_KEY],
     },
     testnet: {
-      url: "https://goerli.base.org",
+      url: "https://base-sepolia-rpc.publicnode.com",
       timeout: 200000000,
       gasPrice: 1100000000,
       gas: 5100000,
-      accounts: [process.env.PRIVATE_KEY],
+      accounts: [process.env.TESTER_PRIVATEKEY],
     },
   },
   etherscan: {
     apiKey: {
-      testnet: "abcd",
-      mainnet: "abcd",
+      testnet: 'abcd',
+      mainnet: process.env.APIKEY,
     },
     customChains: [
       {
         network: "testnet",
-        chainId: 84531,
+        chainId: 84532,
         urls: {
-          apiURL: "https://api-goerli.basescan.org/api",
-          browserURL: "https://goerli.basescan.org/",
+          apiURL: "https://api-sepolia.basescan.org/api",
+          browserURL: "https://sepolia.basescan.org/",
         },
       },
       {
-        network: "mainnet",
+        network: 'mainnet',
         chainId: 8453,
         urls: {
-          apiURL: "https://api.basescan.org/api",
-          browserURL: "https://basescan.org/",
+          apiURL: 'https://api.basescan.org/api',
+          browserURL: 'https://basescan.org/',
         },
       },
     ],
   },
-};
+}
